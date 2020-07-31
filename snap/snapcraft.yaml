@@ -1,0 +1,66 @@
+name: headset
+base: core18
+version: '3.2.1'
+summary: Discover and collect music on YouTube
+description: |
+  Headset is a desktop app that turns YouTube into a world class music streaming service.
+  Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+
+parts:
+  headset:
+    plugin: dump
+    source: https://headsetapp.co/headset-electron/debian/pool/non-free/h/headset/headset_${SNAPCRAFT_PROJECT_VERSION}_amd64.deb
+    source-type: deb
+    source-checksum: sha256/f9dad4e2cec28618c59b89def7492bb74912ee1169d37571577571b464cc5fe8
+    override-pull: |
+      snapcraftctl pull
+
+      # Delete chrome-sandbox
+      rm -f usr/lib/headset/chrome-sandbox
+
+      # Fix desktop file
+      sed -i 's|Exec=headset %U|Exec=headset --no-sandbox %U|g' usr/share/applications/headset.desktop
+      sed -i 's|Icon=headset|Icon=usr/share/pixmaps/headset.png|g' usr/share/applications/headset.desktop
+
+      # Future version will use scalable icons
+      # sed -i 's|Icon=headset|Icon=usr/share/icons/hicolor/scalable/apps/headset.svg|g' usr/share/applications/headset.desktop
+    stage-packages:
+      - pulseaudio
+      - libgtk-3-0
+      - libnotify4
+      - libnss3
+      - libxss1
+      - libxtst6
+      - xdg-utils
+      - libatspi2.0-0
+      - libdrm2
+      - libgbm1
+      - libxcb-dri3-0
+
+apps:
+  headset:
+    extensions: [gnome-3-28]
+    command: desktop-launch headset --no-sandbox
+    desktop: usr/share/applications/headset.desktop
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
+    plugs:
+      - audio-playback
+      - browser-support
+      - gsettings
+      - network
+      - network-bind
+      - opengl
+    slots:
+      - headset-mpris
+
+slots:
+  headset-mpris:
+    interface: mpris
+    name: headset
