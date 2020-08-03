@@ -1,11 +1,11 @@
 name: headset
-base: core18
 version: '3.2.1'
 summary: Discover and collect music on YouTube
 description: |
   Headset is a desktop app that turns YouTube into a world class music streaming service.
   Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!
 
+base: core18
 grade: stable
 confinement: strict
 
