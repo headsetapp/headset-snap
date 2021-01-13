@@ -1,11 +1,11 @@
 name: headset
-base: core18
-version: '3.2.1'
+version: '3.3.0'
 summary: Discover and collect music on YouTube
 description: |
   Headset is a desktop app that turns YouTube into a world class music streaming service.
   Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!
 
+base: core18
 grade: stable
 confinement: strict
 
@@ -17,7 +17,7 @@ parts:
     plugin: dump
     source: https://headsetapp.co/headset-electron/debian/pool/non-free/h/headset/headset_${SNAPCRAFT_PROJECT_VERSION}_amd64.deb
     source-type: deb
-    source-checksum: sha256/f9dad4e2cec28618c59b89def7492bb74912ee1169d37571577571b464cc5fe8
+    source-checksum: sha256/26cb929e9e330d6f1d51dd13e45393e4dc15e9fd0cbd49d7138410dadb7c15d1
     override-pull: |
       snapcraftctl pull
 
@@ -26,10 +26,7 @@ parts:
 
       # Fix desktop file
       sed -i 's|Exec=headset %U|Exec=headset --no-sandbox %U|g' usr/share/applications/headset.desktop
-      sed -i 's|Icon=headset|Icon=usr/share/pixmaps/headset.png|g' usr/share/applications/headset.desktop
-
-      # Future version will use scalable icons
-      # sed -i 's|Icon=headset|Icon=usr/share/icons/hicolor/scalable/apps/headset.svg|g' usr/share/applications/headset.desktop
+      sed -i 's|Icon=headset|Icon=usr/share/icons/hicolor/scalable/apps/headset.svg|g' usr/share/applications/headset.desktop
     stage-packages:
       - pulseaudio
       - libgtk-3-0
