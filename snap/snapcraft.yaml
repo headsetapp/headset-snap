@@ -1,9 +1,9 @@
 name: headset
-version: '4.1.1'
+version: '4.1.2'
 summary: Discover and collect music on YouTube
 description: |
   Headset is a desktop app that turns YouTube into a world class music streaming service.
-  Create collections, tune-in to a music subreddit or quickly play that song you’ve had stuck in your head all day!
+  Create collections, tune-in to a music subreddit or quickly play that song you've had stuck in your head all day!
 
 base: core18
 grade: stable
@@ -17,7 +17,7 @@ parts:
     plugin: dump
     source: https://headsetapp.co/headset-electron/debian/pool/non-free/h/headset/headset_${SNAPCRAFT_PROJECT_VERSION}_amd64.deb
     source-type: deb
-    source-checksum: sha256/786dcb687e0c36b3300345391d3ba2e5270c1dba55c36ed052f0e13632e55b6d
+    source-checksum: sha256/a9ba420a18a034cb308bef1cb68d5c3a5209a92a9c7225114a1e3ab0c8b699d1
     override-pull: |
       snapcraftctl pull
 
