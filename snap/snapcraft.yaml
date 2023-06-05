@@ -20,14 +20,10 @@ parts:
     source-type: deb
     source-checksum: sha256/f3582c22aef8b2081ab84ea0f2933acf4e4a4e6b1b7b8f4265af5a450103c0ca
     override-pull: |
-      snapcraftctl pull
-
+      craftctl default
       # Delete chrome-sandbox
       rm -f usr/lib/headset/chrome-sandbox
-
-      # Fix desktop file
-      sed -i 's|Exec=headset %U|Exec=headset --no-sandbox %U|g' usr/share/applications/headset.desktop
-      sed -i 's|Icon=headset|Icon=usr/share/icons/hicolor/scalable/apps/headset.svg|g' usr/share/applications/headset.desktop
+      sed -i 's|Icon=headset|Icon=snap.headset.headset|g' usr/share/applications/headset.desktop
     stage-packages:
       - pulseaudio
       - libgtk-3-0
@@ -40,6 +36,10 @@ parts:
       - libdrm2
       - libgbm1
       - libxcb-dri3-0
+    override-prime: |
+      craftctl default
+      install -Dm644 usr/share/icons/hicolor/scalable/apps/headset.svg meta/gui/icons/hicolor/scalable/apps/snap.headset.headset.svg
+      install -Dm644 usr/share/icons/hicolor/symbolic/apps/headset-symbolic.svg meta/gui/icons/hicolor/symbolic/apps/snap.headset.headset-symbolic.svg
   cleanup:
     after:  # Make this part run last; list all your other parts here
       - headset
